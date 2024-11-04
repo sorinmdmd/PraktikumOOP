@@ -1,5 +1,7 @@
 package business;
 
+import java.util.Arrays;
+
 public class Teppich {
 
 	// kategorie des Buergeramtes
@@ -12,8 +14,7 @@ public class Teppich {
 	// farben des Buergeramtes
 	private String[] farben;
 
-	public Teppich(String kategorie, float artikelnummer, float breite, float lange,
-			String[] farben) {
+	public Teppich(String kategorie, float artikelnummer, float breite, float lange, String[] farben) {
 		this.kategorie = kategorie;
 		this.artikelnummer = artikelnummer;
 		this.breite = breite;
@@ -74,4 +75,10 @@ public class Teppich {
 		return this.getKategorie() + trenner + this.getArtikelnummer() + trenner + this.getBreite() + trenner
 				+ this.getLange() + trenner + this.getFarbenAlsString(trenner);
 	}
+
+	@Override
+	public String toString() {
+		return kategorie + " " + artikelnummer + " " + breite + " " + lange + " " + Arrays.toString(farben);
+	}
+
 }

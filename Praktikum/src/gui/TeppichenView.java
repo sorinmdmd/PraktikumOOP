@@ -1,11 +1,5 @@
 package gui;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-
 import business.Teppich;
 import business.TeppichenModel;
 import javafx.event.*;
@@ -28,9 +22,9 @@ public class TeppichenView {
 	private Label lblEingabe = new Label("Eingabe");
 	private Label lblAnzeige = new Label("Anzeige");
 	private Label lblKategorie = new Label("Kategorie:");
-	private Label lblArtikelnummer = new Label("Artikelnummer");
-	private Label lblBreite = new Label("Breite");
-	private Label lblLange = new Label("lange");
+	private Label lblArtikelnummer = new Label("Artikelnummer:");
+	private Label lblBreite = new Label("Breite:");
+	private Label lblLange = new Label("Lange:");
 	private Label lblFarben = new Label("Farben:");
 	private TextField txtKategorie = new TextField();
 	private TextField txtArtikelnummer = new TextField();
@@ -160,10 +154,10 @@ public class TeppichenView {
 	}
 
 	public void zeigeTeppichAn() {
-		if (model.getTeppich() != null) {
-			txtAnzeige.setText(model.getTeppich().gibTeppichZurueck(' '));
+		if (model.getTeppichen() != null) {
+			txtAnzeige.setText(model.getTeppichen());
 		} else {
-			zeigeInformationsfensterAn("Bisher wurde kein Bürgeramt aufgenommen!");
+			zeigeInformationsfensterAn("Bisher wurde kein Teppich aufgenommen!");
 		}
 	}
 
