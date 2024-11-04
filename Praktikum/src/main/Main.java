@@ -1,6 +1,7 @@
 package main;
 
-import gui.TeppichenAnwendersystem;
+import gui.TeppichControl;
+import gui.TeppichenView;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -8,7 +9,7 @@ public class Main extends Application {
 	
 	@Override
 	public void start(Stage primaryStage) {
-		new TeppichenAnwendersystem(primaryStage);
+		new TeppichControl(primaryStage);
 	}	
 	
 	public static void main(String[] args){

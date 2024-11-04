@@ -7,6 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import business.Teppich;
+import business.TeppichenModel;
 import javafx.event.*;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -16,8 +17,12 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import ownUtil.*;
 
-public class TeppichenAnwendersystem {
+public class TeppichenView {
 
+	private TeppichenModel model;
+	private TeppichControl control;
+	
+	
 	// ---Anfang Attribute der grafischen Oberflaeche---
 	private Pane pane = new Pane();
 	private Label lblEingabe = new Label("Eingabe");
@@ -45,13 +50,39 @@ public class TeppichenAnwendersystem {
 	// speichert temporaer ein Objekt vom Typ teppich
 	private Teppich teppich;
 
-	public TeppichenAnwendersystem(Stage primaryStage) {
+	public TeppichenView(Stage primaryStage , TeppichenModel model , TeppichControl control) {
+		this.model = model;
+		this.control = control;
 		Scene scene = new Scene(this.pane, 700, 340);
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("Verwaltung von Teppichladen");
 		primaryStage.show();
 		this.initKomponenten();
 		this.initListener();
+	}
+
+	public TextField getTxtKategorie() {
+		return txtKategorie;
+	}
+
+	public TextField getTxtArtikelnummer() {
+		return txtArtikelnummer;
+	}
+
+	public TextField getTxtBreite() {
+		return txtBreite;
+	}
+
+	public TextField getTxtLange() {
+		return txtLange;
+	}
+
+	public TextField getTxtFarben() {
+		return txtFarben;
+	}
+
+	public TextArea getTxtAnzeige() {
+		return txtAnzeige;
 	}
 
 	private void initKomponenten() {
@@ -124,7 +155,7 @@ public class TeppichenAnwendersystem {
 		btnEingabe.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				nehmeTeppichAuf();
+				model.nehmeTeppichAuf();
 			}
 		});
 		btnAnzeige.setOnAction(new EventHandler<ActionEvent>() {
@@ -148,23 +179,13 @@ public class TeppichenAnwendersystem {
 		mnItmCsvExport.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				schreibeTeppichenInCsvDatei();
+				model.schreibeTeppichenInCsvDatei();
 			}
 		});
 	}
 
-	private void nehmeTeppichAuf() {
-		try {
-			this.teppich = new Teppich(txtKategorie.getText(), Float.parseFloat(txtArtikelnummer.getText()),
-					Float.parseFloat(txtBreite.getText()), Float.parseFloat(txtLange.getText()),
-					txtFarben.getText().split(";"));
-			zeigeInformationsfensterAn("Das Bürgeramt wurde aufgenommen!");
-		} catch (Exception exc) {
-			zeigeFehlermeldungsfensterAn(exc.getMessage());
-		}
-	}
 
-	private void zeigeTeppichAn() {
+	public void zeigeTeppichAn() {
 		if (this.teppich != null) {
 			txtAnzeige.setText(this.teppich.gibTeppichZurueck(' '));
 		} else {
@@ -172,7 +193,7 @@ public class TeppichenAnwendersystem {
 		}
 	}
 
-	private void leseAusDatei(String typ) {
+	public void leseAusDatei(String typ) {
 		try {
 			if ("csv".equals(typ)) {
 				BufferedReader ein = new BufferedReader(new FileReader("Teppichen.csv"));
@@ -191,24 +212,13 @@ public class TeppichenAnwendersystem {
 		}
 	}
 
-	private void schreibeTeppichenInCsvDatei() {
-		try {
-			BufferedWriter aus = new BufferedWriter(new FileWriter("TeppichenAusgabe.csv", true));
-			aus.write(teppich.gibTeppichZurueck(';'));
-			aus.close();
-			zeigeInformationsfensterAn("Die Teppichen wurden gespeichert!");
-		} catch (IOException exc) {
-			zeigeFehlermeldungsfensterAn("IOException beim Speichern!");
-		} catch (Exception exc) {
-			zeigeFehlermeldungsfensterAn("Unbekannter Fehler beim Speichern!");
-		}
-	}
+	
 
-	private void zeigeInformationsfensterAn(String meldung) {
+	public void zeigeInformationsfensterAn(String meldung) {
 		new MeldungsfensterAnzeiger(AlertType.INFORMATION, "Information", meldung).zeigeMeldungsfensterAn();
 	}
 
-	void zeigeFehlermeldungsfensterAn(String meldung) {
+	public void zeigeFehlermeldungsfensterAn(String meldung) {
 		new MeldungsfensterAnzeiger(AlertType.ERROR, "Fehler", meldung).zeigeMeldungsfensterAn();
 	}
 
