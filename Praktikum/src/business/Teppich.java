@@ -70,7 +70,7 @@ public class Teppich {
 		return ergebnis + this.getFarben()[i];
 	}
 
-	public String gibBuergeramtZurueck(char trenner) {
+	public String gibTeppichZurueck(char trenner) {
 		return this.getKategorie() + trenner + this.getArtikelnummer() + trenner + this.getBreite() + trenner
 				+ this.getStrasseHNr() + trenner + "\n" + this.getFarbenAlsString(trenner) + "\n";
 	}

@@ -16,17 +16,17 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import ownUtil.*;
 
-public class BuergeraemterAnwendersystem {
+public class TeppichenAnwendersystem {
 
 	// ---Anfang Attribute der grafischen Oberflaeche---
 	private Pane pane = new Pane();
 	private Label lblEingabe = new Label("Eingabe");
 	private Label lblAnzeige = new Label("Anzeige");
-	private Label lblName = new Label("Name:");
-	private Label lblGeoeffnetVon = new Label("Geöffnet von:");
-	private Label lblGeoeffnetBis = new Label("Geöffnet bis:");
-	private Label lblStrasseHNr = new Label("Straße und Hausnummer:");
-	private Label lblDienstleistungen = new Label("Dienstleistungen:");
+	private Label lblName = new Label("Kategorie:");
+	private Label lblGeoeffnetVon = new Label("Artikelnummer");
+	private Label lblGeoeffnetBis = new Label("Breite");
+	private Label lblStrasseHNr = new Label("lange");
+	private Label lblDienstleistungen = new Label("Farben:");
 	private TextField txtName = new TextField();
 	private TextField txtGeoeffnetVon = new TextField();
 	private TextField txtGeoeffnetBis = new TextField();
@@ -42,13 +42,13 @@ public class BuergeraemterAnwendersystem {
 	private MenuItem mnItmCsvExport = new MenuItem("csv-Export");
 	// -------Ende Attribute der grafischen Oberflaeche-------
 
-	// speichert temporaer ein Objekt vom Typ Buergeramt
-	private Teppich buergeramt;
+	// speichert temporaer ein Objekt vom Typ teppich
+	private Teppich teppich;
 
-	public BuergeraemterAnwendersystem(Stage primaryStage) {
+	public TeppichenAnwendersystem(Stage primaryStage) {
 		Scene scene = new Scene(this.pane, 700, 340);
 		primaryStage.setScene(scene);
-		primaryStage.setTitle("Verwaltung von Bürgerämtern");
+		primaryStage.setTitle("Verwaltung von Teppichladen");
 		primaryStage.show();
 		this.initKomponenten();
 		this.initListener();
@@ -124,13 +124,13 @@ public class BuergeraemterAnwendersystem {
 		btnEingabe.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				nehmeBuergeramtAuf();
+				nehmeTeppichAuf();
 			}
 		});
 		btnAnzeige.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				zeigeBuergeraemterAn();
+				zeigeTeppichAn();
 			}
 		});
 		mnItmCsvImport.setOnAction(new EventHandler<ActionEvent>() {
@@ -148,14 +148,14 @@ public class BuergeraemterAnwendersystem {
 		mnItmCsvExport.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				schreibeBuergeraemterInCsvDatei();
+				schreibeTeppichenInCsvDatei();
 			}
 		});
 	}
 
-	private void nehmeBuergeramtAuf() {
+	private void nehmeTeppichAuf() {
 		try {
-			this.buergeramt = new Teppich(txtName.getText(), Float.parseFloat(txtGeoeffnetVon.getText()),
+			this.teppich = new Teppich(txtName.getText(), Float.parseFloat(txtGeoeffnetVon.getText()),
 					Float.parseFloat(txtGeoeffnetBis.getText()), Float.parseFloat(txtStrasseHNr.getText()),
 					txtDienstleistungen.getText().split(";"));
 			zeigeInformationsfensterAn("Das Bürgeramt wurde aufgenommen!");
@@ -164,9 +164,9 @@ public class BuergeraemterAnwendersystem {
 		}
 	}
 
-	private void zeigeBuergeraemterAn() {
-		if (this.buergeramt != null) {
-			txtAnzeige.setText(this.buergeramt.gibBuergeramtZurueck(' '));
+	private void zeigeTeppichAn() {
+		if (this.teppich != null) {
+			txtAnzeige.setText(this.teppich.gibTeppichZurueck(' '));
 		} else {
 			zeigeInformationsfensterAn("Bisher wurde kein Bürgeramt aufgenommen!");
 		}
@@ -175,12 +175,12 @@ public class BuergeraemterAnwendersystem {
 	private void leseAusDatei(String typ) {
 		try {
 			if ("csv".equals(typ)) {
-				BufferedReader ein = new BufferedReader(new FileReader("Buergeraemter.csv"));
+				BufferedReader ein = new BufferedReader(new FileReader("Teppichen.csv"));
 				String[] zeile = ein.readLine().split(";");
-				this.buergeramt = new Teppich(zeile[0], Float.parseFloat(zeile[1]), Float.parseFloat(zeile[2]),
+				this.teppich = new Teppich(zeile[0], Float.parseFloat(zeile[1]), Float.parseFloat(zeile[2]),
 						Float.parseFloat(zeile[3]), zeile[4].split("_"));
 				ein.close();
-				zeigeInformationsfensterAn("Die Bürgerämter wurden gelesen!");
+				zeigeInformationsfensterAn("Die Teppichen wurden gelesen!");
 			} else {
 				zeigeInformationsfensterAn("Noch nicht implementiert!");
 			}
@@ -191,12 +191,12 @@ public class BuergeraemterAnwendersystem {
 		}
 	}
 
-	private void schreibeBuergeraemterInCsvDatei() {
+	private void schreibeTeppichenInCsvDatei() {
 		try {
-			BufferedWriter aus = new BufferedWriter(new FileWriter("BuergeraemterAusgabe.csv", true));
-			aus.write(buergeramt.gibBuergeramtZurueck(';'));
+			BufferedWriter aus = new BufferedWriter(new FileWriter("TeppichenAusgabe.csv", true));
+			aus.write(teppich.gibTeppichZurueck(';'));
 			aus.close();
-			zeigeInformationsfensterAn("Die Bürgerämter wurden gespeichert!");
+			zeigeInformationsfensterAn("Die Teppichen wurden gespeichert!");
 		} catch (IOException exc) {
 			zeigeFehlermeldungsfensterAn("IOException beim Speichern!");
 		} catch (Exception exc) {
