@@ -6,7 +6,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import business.Buergeramt;
+import business.Teppich;
 import javafx.event.*;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -43,7 +43,7 @@ public class BuergeraemterAnwendersystem {
 	// -------Ende Attribute der grafischen Oberflaeche-------
 
 	// speichert temporaer ein Objekt vom Typ Buergeramt
-	private Buergeramt buergeramt;
+	private Teppich buergeramt;
 
 	public BuergeraemterAnwendersystem(Stage primaryStage) {
 		Scene scene = new Scene(this.pane, 700, 340);
@@ -155,8 +155,8 @@ public class BuergeraemterAnwendersystem {
 
 	private void nehmeBuergeramtAuf() {
 		try {
-			this.buergeramt = new Buergeramt(txtName.getText(), Float.parseFloat(txtGeoeffnetVon.getText()),
-					Float.parseFloat(txtGeoeffnetBis.getText()), txtStrasseHNr.getText(),
+			this.buergeramt = new Teppich(txtName.getText(), Float.parseFloat(txtGeoeffnetVon.getText()),
+					Float.parseFloat(txtGeoeffnetBis.getText()), Float.parseFloat(txtStrasseHNr.getText()),
 					txtDienstleistungen.getText().split(";"));
 			zeigeInformationsfensterAn("Das Bürgeramt wurde aufgenommen!");
 		} catch (Exception exc) {
@@ -177,8 +177,8 @@ public class BuergeraemterAnwendersystem {
 			if ("csv".equals(typ)) {
 				BufferedReader ein = new BufferedReader(new FileReader("Buergeraemter.csv"));
 				String[] zeile = ein.readLine().split(";");
-				this.buergeramt = new Buergeramt(zeile[0], Float.parseFloat(zeile[1]), Float.parseFloat(zeile[2]),
-						zeile[3], zeile[4].split("_"));
+				this.buergeramt = new Teppich(zeile[0], Float.parseFloat(zeile[1]), Float.parseFloat(zeile[2]),
+						Float.parseFloat(zeile[3]), zeile[4].split("_"));
 				ein.close();
 				zeigeInformationsfensterAn("Die Bürgerämter wurden gelesen!");
 			} else {
