@@ -21,8 +21,8 @@ public class TeppichenView {
 
 	private TeppichenModel model;
 	private TeppichControl control;
-	
-	
+	private Teppich teppich;
+
 	// ---Anfang Attribute der grafischen Oberflaeche---
 	private Pane pane = new Pane();
 	private Label lblEingabe = new Label("Eingabe");
@@ -48,9 +48,8 @@ public class TeppichenView {
 	// -------Ende Attribute der grafischen Oberflaeche-------
 
 	// speichert temporaer ein Objekt vom Typ teppich
-	private Teppich teppich;
 
-	public TeppichenView(Stage primaryStage , TeppichenModel model , TeppichControl control) {
+	public TeppichenView(Stage primaryStage, TeppichenModel model, TeppichControl control) {
 		this.model = model;
 		this.control = control;
 		Scene scene = new Scene(this.pane, 700, 340);
@@ -59,30 +58,6 @@ public class TeppichenView {
 		primaryStage.show();
 		this.initKomponenten();
 		this.initListener();
-	}
-
-	public TextField getTxtKategorie() {
-		return txtKategorie;
-	}
-
-	public TextField getTxtArtikelnummer() {
-		return txtArtikelnummer;
-	}
-
-	public TextField getTxtBreite() {
-		return txtBreite;
-	}
-
-	public TextField getTxtLange() {
-		return txtLange;
-	}
-
-	public TextField getTxtFarben() {
-		return txtFarben;
-	}
-
-	public TextArea getTxtAnzeige() {
-		return txtAnzeige;
 	}
 
 	private void initKomponenten() {
@@ -155,7 +130,7 @@ public class TeppichenView {
 		btnEingabe.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				model.nehmeTeppichAuf();
+				nehmeTeppichAuf();
 			}
 		});
 		btnAnzeige.setOnAction(new EventHandler<ActionEvent>() {
@@ -167,52 +142,30 @@ public class TeppichenView {
 		mnItmCsvImport.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				leseAusDatei("csv");
+				control.leseAusDatei("csv");
 			}
 		});
 		mnItmTxtImport.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				leseAusDatei("txt");
+				control.leseAusDatei("txt");
 			}
 		});
 		mnItmCsvExport.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				model.schreibeTeppichenInCsvDatei();
+				control.schreibeTeppichenInCsvDatei();
 			}
 		});
 	}
 
-
 	public void zeigeTeppichAn() {
-		if (this.teppich != null) {
-			txtAnzeige.setText(this.teppich.gibTeppichZurueck(' '));
+		if (model.getTeppich() != null) {
+			txtAnzeige.setText(model.getTeppich().gibTeppichZurueck(' '));
 		} else {
 			zeigeInformationsfensterAn("Bisher wurde kein Bürgeramt aufgenommen!");
 		}
 	}
-
-	public void leseAusDatei(String typ) {
-		try {
-			if ("csv".equals(typ)) {
-				BufferedReader ein = new BufferedReader(new FileReader("Teppichen.csv"));
-				String[] zeile = ein.readLine().split(";");
-				this.teppich = new Teppich(zeile[0], Float.parseFloat(zeile[1]), Float.parseFloat(zeile[2]),
-						Float.parseFloat(zeile[3]), zeile[4].split("_"));
-				ein.close();
-				zeigeInformationsfensterAn("Die Teppichen wurden gelesen!");
-			} else {
-				zeigeInformationsfensterAn("Noch nicht implementiert!");
-			}
-		} catch (IOException exc) {
-			zeigeFehlermeldungsfensterAn("IOException beim Lesen!");
-		} catch (Exception exc) {
-			zeigeFehlermeldungsfensterAn("Unbekannter Fehler beim Lesen!");
-		}
-	}
-
-	
 
 	public void zeigeInformationsfensterAn(String meldung) {
 		new MeldungsfensterAnzeiger(AlertType.INFORMATION, "Information", meldung).zeigeMeldungsfensterAn();
@@ -220,6 +173,42 @@ public class TeppichenView {
 
 	public void zeigeFehlermeldungsfensterAn(String meldung) {
 		new MeldungsfensterAnzeiger(AlertType.ERROR, "Fehler", meldung).zeigeMeldungsfensterAn();
+	}
+
+	public TextField getTxtKategorie() {
+		return txtKategorie;
+	}
+
+	public TextField getTxtArtikelnummer() {
+		return txtArtikelnummer;
+	}
+
+	public TextField getTxtBreite() {
+		return txtBreite;
+	}
+
+	public TextField getTxtLange() {
+		return txtLange;
+	}
+
+	public TextField getTxtFarben() {
+		return txtFarben;
+	}
+
+	public TextArea getTxtAnzeige() {
+		return txtAnzeige;
+	}
+
+	public void nehmeTeppichAuf() {
+		try {
+			this.teppich = new Teppich(getTxtKategorie().getText(), Float.parseFloat(getTxtArtikelnummer().getText()),
+					Float.parseFloat(getTxtBreite().getText()), Float.parseFloat(getTxtLange().getText()),
+					getTxtFarben().getText().split(";"));
+			model.setTeppich(teppich);
+			zeigeInformationsfensterAn("Das Teppich wurde aufgenommen!");
+		} catch (Exception exc) {
+			zeigeFehlermeldungsfensterAn(exc.getMessage());
+		}
 	}
 
 }

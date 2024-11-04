@@ -8,16 +8,16 @@ public class Teppich {
 	private float artikelnummer;
 	private float breite;
 	// Strasse und Hausnummer des Buergeramtes
-	private float strasseHNr;
+	private float lange;
 	// farben des Buergeramtes
 	private String[] farben;
 
-	public Teppich(String kategorie, float artikelnummer, float breite, float strasseHNr,
+	public Teppich(String kategorie, float artikelnummer, float breite, float lange,
 			String[] farben) {
 		this.kategorie = kategorie;
 		this.artikelnummer = artikelnummer;
 		this.breite = breite;
-		this.strasseHNr = strasseHNr;
+		this.lange = lange;
 		this.farben = farben;
 	}
 
@@ -45,12 +45,12 @@ public class Teppich {
 		this.breite = breite;
 	}
 
-	public float getStrasseHNr() {
-		return strasseHNr;
+	public float getLange() {
+		return lange;
 	}
 
-	public void setStrasseHNr(float strasseHNr) {
-		this.strasseHNr = strasseHNr;
+	public void setlange(float lange) {
+		this.lange = lange;
 	}
 
 	public String[] getFarben() {
@@ -72,6 +72,6 @@ public class Teppich {
 
 	public String gibTeppichZurueck(char trenner) {
 		return this.getKategorie() + trenner + this.getArtikelnummer() + trenner + this.getBreite() + trenner
-				+ this.getStrasseHNr() + trenner + "\n" + this.getFarbenAlsString(trenner) + "\n";
+				+ this.getLange() + trenner + "\n" + this.getFarbenAlsString(trenner) + "\n";
 	}
 }

@@ -1,6 +1,8 @@
 package business;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -8,35 +10,29 @@ import gui.TeppichenView;
 
 public class TeppichenModel {
 	private Teppich teppich;
-	
-	private TeppichenView view;
-	
 	public TeppichenModel() {
-		
+			
+	}
+
+	public void writeCSV() throws IOException {
+		BufferedWriter aus = new BufferedWriter(new FileWriter("TeppichenAusgabe.csv", true));
+		aus.write(teppich.gibTeppichZurueck(';'));
+		aus.close();
+	}
+
+	public void readCSV() throws IOException {
+		BufferedReader ein = new BufferedReader(new FileReader("Teppichen.csv"));
+		String[] zeile = ein.readLine().split(";");
+		this.teppich = new Teppich(zeile[0], Float.parseFloat(zeile[1]), Float.parseFloat(zeile[2]),
+				Float.parseFloat(zeile[3]), zeile[4].split("_"));
+		ein.close();
 	}
 	
-	public void schreibeTeppichenInCsvDatei() {
-		try {
-			BufferedWriter aus = new BufferedWriter(new FileWriter("TeppichenAusgabe.csv", true));
-			aus.write(teppich.gibTeppichZurueck(';'));
-			aus.close();
-			view.zeigeInformationsfensterAn("Die Teppichen wurden gespeichert!");
-		} catch (IOException exc) {
-			view.zeigeFehlermeldungsfensterAn("IOException beim Speichern!");
-		} catch (Exception exc) {
-			view.zeigeFehlermeldungsfensterAn("Unbekannter Fehler beim Speichern!");
-		}
+	public Teppich getTeppich() {
+		return teppich;
 	}
-	
-	
-	public void nehmeTeppichAuf() {
-		try {
-			this.teppich = new Teppich(view.getTxtKategorie().getText(), Float.parseFloat(view.getTxtArtikelnummer().getText()),
-					Float.parseFloat(view.getTxtBreite().getText()), Float.parseFloat(view.getTxtLange().getText()),
-					view.getTxtFarben().getText().split(";"));
-			view.zeigeInformationsfensterAn("Das Teppich wurde aufgenommen!");
-		} catch (Exception exc) {
-			view.zeigeFehlermeldungsfensterAn(exc.getMessage());
-		}
+
+	public void setTeppich(Teppich teppich) {
+		this.teppich = teppich;
 	}
 }
