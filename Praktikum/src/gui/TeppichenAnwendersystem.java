@@ -22,16 +22,16 @@ public class TeppichenAnwendersystem {
 	private Pane pane = new Pane();
 	private Label lblEingabe = new Label("Eingabe");
 	private Label lblAnzeige = new Label("Anzeige");
-	private Label lblName = new Label("Kategorie:");
-	private Label lblGeoeffnetVon = new Label("Artikelnummer");
-	private Label lblGeoeffnetBis = new Label("Breite");
-	private Label lblStrasseHNr = new Label("lange");
-	private Label lblDienstleistungen = new Label("Farben:");
-	private TextField txtName = new TextField();
-	private TextField txtGeoeffnetVon = new TextField();
-	private TextField txtGeoeffnetBis = new TextField();
-	private TextField txtStrasseHNr = new TextField();
-	private TextField txtDienstleistungen = new TextField();
+	private Label lblKategorie = new Label("Kategorie:");
+	private Label lblArtikelnummer = new Label("Artikelnummer");
+	private Label lblBreite = new Label("Breite");
+	private Label lblLange = new Label("lange");
+	private Label lblFarben = new Label("Farben:");
+	private TextField txtKategorie = new TextField();
+	private TextField txtArtikelnummer = new TextField();
+	private TextField txtBreite = new TextField();
+	private TextField txtLange = new TextField();
+	private TextField txtFarben = new TextField();
 	private TextArea txtAnzeige = new TextArea();
 	private Button btnEingabe = new Button("Eingabe");
 	private Button btnAnzeige = new Button("Anzeige");
@@ -65,36 +65,36 @@ public class TeppichenAnwendersystem {
 		lblAnzeige.setLayoutY(40);
 		lblAnzeige.setFont(font);
 		lblAnzeige.setStyle("-fx-font-weight: bold;");
-		lblName.setLayoutX(20);
-		lblName.setLayoutY(90);
-		lblGeoeffnetVon.setLayoutX(20);
-		lblGeoeffnetVon.setLayoutY(130);
-		lblGeoeffnetBis.setLayoutX(20);
-		lblGeoeffnetBis.setLayoutY(170);
-		lblStrasseHNr.setLayoutX(20);
-		lblStrasseHNr.setLayoutY(210);
-		lblDienstleistungen.setLayoutX(20);
-		lblDienstleistungen.setLayoutY(250);
-		pane.getChildren().addAll(lblEingabe, lblAnzeige, lblName, lblGeoeffnetVon, lblGeoeffnetBis, lblStrasseHNr,
-				lblDienstleistungen);
+		lblKategorie.setLayoutX(20);
+		lblKategorie.setLayoutY(90);
+		lblArtikelnummer.setLayoutX(20);
+		lblArtikelnummer.setLayoutY(130);
+		lblBreite.setLayoutX(20);
+		lblBreite.setLayoutY(170);
+		lblLange.setLayoutX(20);
+		lblLange.setLayoutY(210);
+		lblFarben.setLayoutX(20);
+		lblFarben.setLayoutY(250);
+		pane.getChildren().addAll(lblEingabe, lblAnzeige, lblKategorie, lblArtikelnummer, lblBreite, lblLange,
+				lblFarben);
 
 		// Textfelder
-		txtName.setLayoutX(170);
-		txtName.setLayoutY(90);
-		txtName.setPrefWidth(200);
-		txtGeoeffnetVon.setLayoutX(170);
-		txtGeoeffnetVon.setLayoutY(130);
-		txtGeoeffnetVon.setPrefWidth(200);
-		txtGeoeffnetBis.setLayoutX(170);
-		txtGeoeffnetBis.setLayoutY(170);
-		txtGeoeffnetBis.setPrefWidth(200);
-		txtStrasseHNr.setLayoutX(170);
-		txtStrasseHNr.setLayoutY(210);
-		txtStrasseHNr.setPrefWidth(200);
-		txtDienstleistungen.setLayoutX(170);
-		txtDienstleistungen.setLayoutY(250);
-		txtDienstleistungen.setPrefWidth(200);
-		pane.getChildren().addAll(txtName, txtGeoeffnetVon, txtGeoeffnetBis, txtStrasseHNr, txtDienstleistungen);
+		txtKategorie.setLayoutX(170);
+		txtKategorie.setLayoutY(90);
+		txtKategorie.setPrefWidth(200);
+		txtArtikelnummer.setLayoutX(170);
+		txtArtikelnummer.setLayoutY(130);
+		txtArtikelnummer.setPrefWidth(200);
+		txtBreite.setLayoutX(170);
+		txtBreite.setLayoutY(170);
+		txtBreite.setPrefWidth(200);
+		txtLange.setLayoutX(170);
+		txtLange.setLayoutY(210);
+		txtLange.setPrefWidth(200);
+		txtFarben.setLayoutX(170);
+		txtFarben.setLayoutY(250);
+		txtFarben.setPrefWidth(200);
+		pane.getChildren().addAll(txtKategorie, txtArtikelnummer, txtBreite, txtLange, txtFarben);
 
 		// Textbereich
 		txtAnzeige.setEditable(false);
@@ -155,9 +155,9 @@ public class TeppichenAnwendersystem {
 
 	private void nehmeTeppichAuf() {
 		try {
-			this.teppich = new Teppich(txtName.getText(), Float.parseFloat(txtGeoeffnetVon.getText()),
-					Float.parseFloat(txtGeoeffnetBis.getText()), Float.parseFloat(txtStrasseHNr.getText()),
-					txtDienstleistungen.getText().split(";"));
+			this.teppich = new Teppich(txtKategorie.getText(), Float.parseFloat(txtArtikelnummer.getText()),
+					Float.parseFloat(txtBreite.getText()), Float.parseFloat(txtLange.getText()),
+					txtFarben.getText().split(";"));
 			zeigeInformationsfensterAn("Das Bürgeramt wurde aufgenommen!");
 		} catch (Exception exc) {
 			zeigeFehlermeldungsfensterAn(exc.getMessage());
