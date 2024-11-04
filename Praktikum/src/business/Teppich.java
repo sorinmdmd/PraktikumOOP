@@ -72,6 +72,6 @@ public class Teppich {
 
 	public String gibTeppichZurueck(char trenner) {
 		return this.getKategorie() + trenner + this.getArtikelnummer() + trenner + this.getBreite() + trenner
-				+ this.getLange() + trenner + "\n" + this.getFarbenAlsString(trenner) + "\n";
+				+ this.getLange() + trenner + this.getFarbenAlsString(trenner);
 	}
 }

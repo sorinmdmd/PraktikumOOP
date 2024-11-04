@@ -17,6 +17,7 @@ public class TeppichenModel {
 	public void writeCSV() throws IOException {
 		BufferedWriter aus = new BufferedWriter(new FileWriter("TeppichenAusgabe.csv", true));
 		aus.write(teppich.gibTeppichZurueck(';'));
+		aus.newLine();
 		aus.close();
 	}
 
